@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Imprenta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">📦 Imprenta</a>
+    <div class="nav-links">
+      <a href="/">Inicio</a>
+      <a href="/resumen">Resumen</a>
+    </div>
+  </div>
+</nav>
+
+ <h1>Registrar venta</h1>
+<form action="/vender" method="POST">
+  <label for="cliente">Cliente:</label>
+  <input type="text" name="cliente" required><br><br>
+
+  <% productos.forEach(producto => { %>
+    <label><%= producto.color %> (Stock: <%= producto.stock %>): </label>
+    <input type="number" name="cantidad[<%= producto.color %>]" min="0" value="0" /><br/>
+  <% }); %>
+  <button type="submit">Registrar</button>
+</form>
+
+
+  <h2>Agregar stock</h2>
+<form action="/agregar-stock" method="POST">
+  <label for="color">Color:</label>
+  <select name="color" required>
+    <% productos.forEach(producto => { %>
+      <option value="<%= producto.color %>"><%= producto.color %></option>
+    <% }); %>
+  </select>
+
+  <label for="cantidad">Cantidad a agregar:</label>
+  <input type="number" name="cantidad" min="1" required>
+  <button type="submit">Agregar stock</button>
+</form>
+
+
+  <br>
+  <a href="/resumen">Ver resúmenes de ventas</a>
+</body>
+</html>
+
