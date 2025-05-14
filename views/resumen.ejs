@@ -1,72 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Resumen de Ventas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">📦 Imprenta</a>
+      <div class="nav-links">
+        <a href="/">Inicio</a>
+        <a href="/resumen">Resumen</a>
+      </div>
+    </div>
+  </nav>
+
   <h1>Resumen de ventas</h1>
 
-  <h2>Resumen mensual de ventas</h2>
-  <div class="table-container">
-  <table border="1">
+  <form method="GET" action="/resumen">
+    <label for="cliente">Filtrar por cliente:</label>
+    <input type="text" name="cliente" value="<%= cliente || '' %>">
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <h2>Mensual</h2>
+  <table>
     <thead>
       <tr>
         <th>Mes</th>
         <th>Color</th>
-        <th>Total Vendido</th>
+        <th>Total</th>
       </tr>
     </thead>
     <tbody>
-      <% if (ventasMensuales && ventasMensuales.length > 0) { %>
-        <% ventasMensuales.forEach(venta => { %>
-          <tr>
-            <td><%= venta.mes %></td>
-            <td><%= venta.color %></td>
-            <td><%= venta.total %></td>
-          </tr>
-        <% }); %>
-      <% } else { %>
-        <tr><td colspan="3">No hay ventas registradas para este mes.</td></tr>
-      <% } %>
+      <% ventasMensuales.forEach(v => { %>
+        <tr>
+          <td><%= v.mes %></td>
+          <td><%= v.color %></td>
+          <td><%= v.total %></td>
+        </tr>
+      <% }); %>
     </tbody>
   </table>
-    </div>
 
-  <h2>Resumen anual de ventas</h2>
-    <div class="table-container">
-  <table border="1">
+  <h2>Anual</h2>
+  <table>
     <thead>
       <tr>
         <th>Año</th>
         <th>Color</th>
-        <th>Total Vendido</th>
+        <th>Total</th>
       </tr>
     </thead>
     <tbody>
-      <% if (ventasAnuales && ventasAnuales.length > 0) { %>
-        <% ventasAnuales.forEach(venta => { %>
-          <tr>
-            <td><%= venta.anio %></td>
-            <td><%= venta.color %></td>
-            <td><%= venta.total %></td>
-          </tr>
-        <% }); %>
-      <% } else { %>
-        <tr><td colspan="3">No hay ventas registradas para este año.</td></tr>
-      <% } %>
+      <% ventasAnuales.forEach(v => { %>
+        <tr>
+          <td><%= v.anio %></td>
+          <td><%= v.color %></td>
+          <td><%= v.total %></td>
+        </tr>
+      <% }); %>
     </tbody>
   </table>
-    </div>
-  v<h1>Resumen de ventas</h1>
 
-<form method="GET" action="/resumen">
-  <label for="cliente">Filtrar por cliente:</label>
-  <input type="text" name="cliente" value="<%= cliente || '' %>">
-  <button type="submit">Filtrar</button>
-</form>
-
-
-  <br>
-  <a href="/">Volver al inicio</a>
 </body>
 </html>
