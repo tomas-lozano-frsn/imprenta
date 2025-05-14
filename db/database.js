@@ -25,10 +25,10 @@ db.exec(`
   );
 `);
 
-module.exports = db;
 
 
- /* // Insertar productos si no existen
+
+  // Insertar productos si no existen
   const colores = ['rojo', 'azul', 'verde'];
   const precio = 1000;
   colores.forEach(color => {
@@ -36,7 +36,7 @@ module.exports = db;
       (SELECT id FROM productos WHERE color = ?), ?, ?, COALESCE((SELECT stock FROM productos WHERE color = ?), 0)
     )`, [color, color, precio, color]);
   });
-});
 
-module.exports = db; */
+
+module.exports = db; 
 

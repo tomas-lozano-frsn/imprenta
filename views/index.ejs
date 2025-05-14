@@ -1,61 +1,52 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Imprenta</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>🧱 Imprenta</h1>
-    <nav>
+    <nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">📦 Imprenta</a>
+    <div class="nav-links">
       <a href="/">Inicio</a>
       <a href="/resumen">Resumen</a>
-    </nav>
-  </header>
+    </div>
+  </div>
+</nav>
 
-  <main>
-    <h2>Registrar venta</h2>
-    <form action="/vender" method="POST">
-      <label for="cliente">Cliente:</label>
-      <input type="text" id="cliente" name="cliente" required>
+ <h1>Registrar venta</h1>
+<form action="/vender" method="POST">
+  <label for="cliente">Cliente:</label>
+  <input type="text" name="cliente" required><br><br>
 
-      <table>
-        <tr>
-          <th>Color</th>
-          <th>Stock actual</th>
-          <th>Cantidad a vender</th>
-        </tr>
-        <% productos.forEach(producto => { %>
-          <tr>
-            <td><%= producto.color %></td>
-            <td><%= producto.stock %></td>
-            <td>
-              <input type="number" name="cantidad[<%= producto.color %>]" min="0" value="0">
-            </td>
-          </tr>
-        <% }); %>
-      </table>
+  <% productos.forEach(producto => { %>
+    <label><%= producto.color %> (Stock: <%= producto.stock %>): </label>
+    <input type="number" name="cantidad[<%= producto.color %>]" min="0" value="0" /><br/>
+  <% }); %>
+  <button type="submit">Registrar</button>
+</form>
 
-      <button type="submit">Registrar</button>
-    </form>
 
-    <h2>Agregar stock</h2>
-    <form action="/agregar-stock" method="POST">
-      <label for="color">Color:</label>
-      <select name="color" id="color">
-        <% productos.forEach(producto => { %>
-          <option value="<%= producto.color %>"><%= producto.color %></option>
-        <% }); %>
-      </select>
+  <h2>Agregar stock</h2>
+<form action="/agregar-stock" method="POST">
+  <label for="color">Color:</label>
+  <select name="color" required>
+    <% productos.forEach(producto => { %>
+      <option value="<%= producto.color %>"><%= producto.color %></option>
+    <% }); %>
+  </select>
 
-      <label for="cantidad">Cantidad a agregar:</label>
-      <input type="number" name="cantidad" id="cantidad" min="1">
+  <label for="cantidad">Cantidad a agregar:</label>
+  <input type="number" name="cantidad" min="1" required>
+  <button type="submit">Agregar stock</button>
+</form>
 
-      <button type="submit">Agregar stock</button>
-    </form>
 
-    <p><a href="/resumen">Ver resúmenes de ventas</a></p>
-  </main>
+  <br>
+  <a href="/resumen">Ver resúmenes de ventas</a>
 </body>
 </html>
+
