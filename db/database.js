@@ -1,12 +1,12 @@
 const Database = require('better-sqlite3');
 const db = new Database('database.sqlite');
 
-// Si querés ejecutar algo al inicio, usá directamente db.exec()
+// Crear tablas
 db.exec(`
   CREATE TABLE IF NOT EXISTS productos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    color TEXT,
-    stock INTEGER
+    color TEXT UNIQUE,
+    stock INTEGER DEFAULT 0
   );
 
   CREATE TABLE IF NOT EXISTS ventas (
@@ -25,18 +25,14 @@ db.exec(`
   );
 `);
 
+// Insertar colores si no existen (con stock 0)
+const colores = ['rojo', 'azul', 'verde'];
+colores.forEach(color => {
+  const existe = db.prepare('SELECT 1 FROM productos WHERE color = ?').get(color);
+  if (!existe) {
+    db.prepare('INSERT INTO productos (color, stock) VALUES (?, ?)').run(color, 0);
+    console.log(`Producto insertado: ${color}`);
+  }
+});
 
-
-
-  // Insertar productos si no existen
-  const colores = ['rojo', 'azul', 'verde'];
-  const precio = 1000;
-  colores.forEach(color => {
-    db.run(`INSERT OR IGNORE INTO productos (id, color, precio, stock) VALUES (
-      (SELECT id FROM productos WHERE color = ?), ?, ?, COALESCE((SELECT stock FROM productos WHERE color = ?), 0)
-    )`, [color, color, precio, color]);
-  });
-
-
-module.exports = db; 
-
+module.exports = db;
